@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="20dp">
+
+    <ImageView
+        android:id="@+id/userDetail_img_profile"
+        tools:src="@android:color/darker_gray"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="15dp"
+        android:contentDescription="@string/todo" />
+
+    <TextView
+        android:id="@+id/userDetail_tv_name"
+        style="@style/userDetail_tv_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="Rasyid Ridla" />
+
+    <TextView
+        android:id="@+id/userDetail_tv_username"
+        style="@style/userDetail_tv_subTittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="RasyidR298" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginVertical="20dp">
+
+        <TextView
+            android:id="@+id/tvFollowers"
+            style="@style/userDetail_tv_contentNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="1000"
+            app:layout_constraintEnd_toStartOf="@+id/tvFollowing"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFollowing"
+            style="@style/userDetail_tv_contentNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvFollowers"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/userDetail_tv_contentNumberTittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/followers"
+            app:layout_constraintEnd_toEndOf="@+id/tvFollowers"
+            app:layout_constraintStart_toStartOf="@+id/tvFollowers"
+            app:layout_constraintTop_toBottomOf="@+id/tvFollowers" />
+
+        <TextView
+            style="@style/userDetail_tv_contentNumberTittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/following"
+            app:layout_constraintEnd_toEndOf="@+id/tvFollowing"
+            app:layout_constraintStart_toStartOf="@+id/tvFollowing"
+            app:layout_constraintTop_toBottomOf="@+id/tvFollowing" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorGreySoft2"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="Suspicious0dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_user_company"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            android:contentDescription="@string/todo" />
+
+        <TextView
+            android:id="@+id/tvCompany"
+            style="@style/userDetail_tv_contentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            tools:text="PT Pencari Cinta Sejati"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_user_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            android:contentDescription="@string/todo" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            style="@style/userDetail_tv_contentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            tools:text="Asgard"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_user_repository"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            android:contentDescription="@string/todo" />
+
+        <TextView
+            android:id="@+id/tvRepository"
+            style="@style/userDetail_tv_contentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            tools:text="30 Repository"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
