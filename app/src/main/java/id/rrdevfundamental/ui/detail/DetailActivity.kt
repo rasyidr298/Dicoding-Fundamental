@@ -22,7 +22,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        user = intent.getSerializableExtra("users") as? User
+        user =  intent.extras?.getParcelable<User>("users")
     }
 
     @SuppressLint("SetTextI18n")

@@ -43,8 +43,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, OnItemClicked {
     override fun onEventClick(data: User) {
         super.onEventClick(data)
 
-        val intent = Intent(this,DetailActivity::class.java)
-        intent.putExtra("users",data)
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("users", data)
         startActivity(intent)
     }
 

@@ -1,7 +1,9 @@
 package id.rrdevfundamental.data.model
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class User(
     val id: Int,
     val username: String,
@@ -12,4 +14,4 @@ data class User(
     val repository: Int,
     val follower: Int,
     val following: Int
-): Serializable
+): Parcelable
