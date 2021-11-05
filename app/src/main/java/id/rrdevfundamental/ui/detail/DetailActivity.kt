@@ -11,6 +11,10 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private var user: User? = null
 
+    companion object {
+        const val USER = "USER"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -22,7 +26,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        user =  intent.extras?.getParcelable<User>("users")
+        user =  intent.extras?.getParcelable<User>(USER)
     }
 
     @SuppressLint("SetTextI18n")

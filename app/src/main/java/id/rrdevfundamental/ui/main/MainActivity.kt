@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, OnItemClicked {
         super.onEventClick(data)
 
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("users", data)
+        intent.putExtra(DetailActivity.USER, data)
         startActivity(intent)
     }
 
