@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import id.rrdevfundamental.data.model.User
+import id.rrdevfundamental.data.response.User
 import id.rrdevfundamental.databinding.ItemUserBinding
 import id.rrdevfundamental.utils.OnItemClicked
 import id.rrdevfundamental.utils.loadImage
 
-// User Recycler View Adapter; Keyword : Adapter
 class UserAdapter(private val onItemClicked: OnItemClicked) : RecyclerView.Adapter<UserAdapter.EventHolder>() {
 
     private val list = mutableListOf<User>()
@@ -41,10 +40,10 @@ class UserAdapter(private val onItemClicked: OnItemClicked) : RecyclerView.Adapt
 
         fun bind(onItemClicked: OnItemClicked, data: User) {
             with(binding){
-                tvName.text = data.name
-                tvCompany.text = data.company
-                tvLocation.text = data.location
-                ivUser.loadImage(data.avatar)
+                tvName.text = data.login
+                tvCompany.text = data.type
+                tvLocation.text = data.organizations_url
+                ivUser.loadImage(data.avatar_url.toString())
             }
             binding.root.setOnClickListener {
                 onItemClicked.onEventClick(data)

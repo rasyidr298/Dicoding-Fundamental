@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvName"
         tools:src="@android:color/darker_gray"
-        android:contentDescription="@string/todo" />
+        android:contentDescription="@string/placeholder_waiting_recent_tittle" />
 
     <TextView
         android:id="@+id/tvName"
@@ -33,7 +33,6 @@
 
     <TextView
         android:id="@+id/tvCompany"
-        style="@style/home_tv_subTittle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -46,7 +45,6 @@
 
     <TextView
         android:id="@+id/tvLocation"
-        style="@style/home_tv_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
