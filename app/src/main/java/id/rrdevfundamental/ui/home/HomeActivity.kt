@@ -17,6 +17,7 @@ import id.rrdevfundamental.ui.detail.DetailActivity
 import id.rrdevfundamental.utils.OnItemClicked
 import id.rrdevfundamental.utils.hide
 import id.rrdevfundamental.utils.show
+import id.rrdevfundamental.utils.toast
 import id.rrdevfundamental.viewModelModule
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -76,6 +77,8 @@ class HomeActivity : AppCompatActivity(), OnItemClicked {
                         Status.StatusType.ERROR -> {
                             with(binding) {
                                 progress.hide()
+                                lootie.show()
+                                toast(it.message.toString())
                                 lootie.setAnimation("empty.json")
                                 lootie.playAnimation()
                                 lootie.loop(true)
