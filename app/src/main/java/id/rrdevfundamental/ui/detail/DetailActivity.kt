@@ -76,7 +76,7 @@ class DetailActivity : AppCompatActivity() {
                                         profile_tv_name.text = this.name
                                         profile_tv_username.text = this.login
                                         profile_tv_company.text = this.company
-                                        profile_tv_location.text = this.company
+                                        profile_tv_location.text = this.location
                                     }
                                 }
                             }
