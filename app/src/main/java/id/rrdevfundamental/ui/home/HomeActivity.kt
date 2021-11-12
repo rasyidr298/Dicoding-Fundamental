@@ -1,7 +1,10 @@
 package id.rrdevfundamental.ui.home
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -9,19 +12,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import id.rrdevfundamental.R
-import id.rrdevfundamental.data.adapter.UserAdapter
-import id.rrdevfundamental.data.response.Status
-import id.rrdevfundamental.data.response.User
+import id.rrdevfundamental.ui.adapter.UserAdapter
+import id.rrdevfundamental.data.network.response.Status
+import id.rrdevfundamental.data.network.response.User
 import id.rrdevfundamental.databinding.ActivityHomeBinding
 import id.rrdevfundamental.ui.detail.DetailActivity
+import id.rrdevfundamental.ui.favorite.FavoriteActivity
 import id.rrdevfundamental.utils.OnItemClicked
 import id.rrdevfundamental.utils.hide
 import id.rrdevfundamental.utils.show
 import id.rrdevfundamental.utils.toast
-import id.rrdevfundamental.viewModelModule
-import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.core.context.loadKoinModules
 
 class HomeActivity : AppCompatActivity(), OnItemClicked {
 
@@ -38,22 +39,26 @@ class HomeActivity : AppCompatActivity(), OnItemClicked {
 
         setupToolbar()
         initView()
+        setupView()
         observeSearchQuery()
     }
 
     private fun initView() {
         adapter = UserAdapter(this)
 
+        with(binding.rvMain){
+            layoutManager = GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.VERTICAL, false)
+            adapter = this@HomeActivity.adapter
+        }
+    }
+
+    private fun setupView() {
+
         with(binding) {
             progress.hide()
             lootie.setAnimation("search.json")
             lootie.playAnimation()
             lootie.loop(true)
-        }
-
-        with(binding.rvMain){
-            layoutManager = GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.VERTICAL, false)
-            adapter = this@HomeActivity.adapter
         }
     }
 
@@ -69,8 +74,10 @@ class HomeActivity : AppCompatActivity(), OnItemClicked {
                         }
                         Status.StatusType.SUCCESS -> {
                             it.data?.let { data ->
-                                progress.hide()
-                                lootie.hide()
+                                with(binding) {
+                                    progress.hide()
+                                    lootie.hide()
+                                }
                                 adapter.addList(data.items)
                             }
                         }
@@ -121,8 +128,25 @@ class HomeActivity : AppCompatActivity(), OnItemClicked {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.search_menu, menu)
-        val item = menu.findItem(R.id.action_search)
-        searchView.setMenuItem(item)
+        val itemSearch = menu.findItem(R.id.action_search)
+        val itemSetting = menu.findItem(R.id.action_setting)
+        val itemFavorite = menu.findItem(R.id.action_favorite)
+
+        searchView.setMenuItem(itemSearch)
+        itemFavorite.setOnMenuItemClickListener {
+            startActivity(Intent(this, FavoriteActivity::class.java))
+            true
+        }
+
+        itemSetting.setOnMenuItemClickListener {
+            val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+            try {
+                startActivity(intent)
+            }catch (e: ActivityNotFoundException) {
+                Log.e("activity", e.message.toString())
+            }
+            true
+        }
         return super.onCreateOptionsMenu(menu)
     }
 }

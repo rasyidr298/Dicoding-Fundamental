@@ -1,4 +1,4 @@
-package id.rrdevfundamental.data.response
+package id.rrdevfundamental.data.network.response
 
 data class SearchResponse(
     val incomplete_results: Boolean,

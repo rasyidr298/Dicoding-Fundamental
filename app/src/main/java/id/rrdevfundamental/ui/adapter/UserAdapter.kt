@@ -1,10 +1,10 @@
-package id.rrdevfundamental.data.adapter
+package id.rrdevfundamental.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import id.rrdevfundamental.data.response.User
+import id.rrdevfundamental.data.network.response.User
 import id.rrdevfundamental.databinding.ItemUserBinding
 import id.rrdevfundamental.utils.OnItemClicked
 import id.rrdevfundamental.utils.loadImage

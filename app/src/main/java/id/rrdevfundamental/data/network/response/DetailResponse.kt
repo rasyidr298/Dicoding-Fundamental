@@ -1,7 +1,7 @@
-package id.rrdevfundamental.data.response
+package id.rrdevfundamental.data.network.response
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class DetailResponse(
@@ -36,5 +36,6 @@ data class DetailResponse(
     val twitter_username: String?,
     val type: String?,
     val updated_at: String?,
-    val url: String?
+    val url: String?,
+    var isSave: Boolean = false
 ) : Parcelable

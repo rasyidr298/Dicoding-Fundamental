@@ -1,4 +1,4 @@
-package id.rrdevfundamental.data.adapter
+package id.rrdevfundamental.ui.adapter
 
 import android.content.Context
 import androidx.annotation.StringRes

@@ -1,4 +1,4 @@
-package id.rrdevfundamental.data.response
+package id.rrdevfundamental.data.network.response
 
 class Status<T>(val status: StatusType, val data: T?, val message: String?) {
 

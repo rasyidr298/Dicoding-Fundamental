@@ -1,8 +1,8 @@
 package id.rrdevfundamental.data.network
 
-import id.rrdevfundamental.data.response.DetailResponse
-import id.rrdevfundamental.data.response.SearchResponse
-import id.rrdevfundamental.data.response.User
+import id.rrdevfundamental.data.network.response.DetailResponse
+import id.rrdevfundamental.data.network.response.SearchResponse
+import id.rrdevfundamental.data.network.response.User
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path

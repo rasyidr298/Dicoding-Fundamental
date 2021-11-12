@@ -1,14 +1,18 @@
 package id.rrdevfundamental
 
+import androidx.room.Room
 import id.rrdevfundamental.data.network.ApiService
 import id.rrdevfundamental.data.network.BasicInterceptor
+import id.rrdevfundamental.data.db.UserDatabase
 import id.rrdevfundamental.data.repository.UserRepository
 import id.rrdevfundamental.ui.detail.DetailViewModel
+import id.rrdevfundamental.ui.favorite.FavoritelViewModel
 import id.rrdevfundamental.ui.home.HomeViewModel
 import id.rrdevfundamental.utils.ACCESS_TOKEN
 import id.rrdevfundamental.utils.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -38,11 +42,23 @@ val networkModule = module {
     }
 }
 
+val databaseModule = module {
+    factory { get<UserDatabase>().getUserDao() }
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            UserDatabase::class.java, "user_db"
+        ).fallbackToDestructiveMigration()
+            .build()
+    }
+}
+
 val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { DetailViewModel(get()) }
+    viewModel { FavoritelViewModel(get()) }
 }
 
 val repositoryModule = module {
-    single { UserRepository(get()) }
+    single { UserRepository(get(), get()) }
 }

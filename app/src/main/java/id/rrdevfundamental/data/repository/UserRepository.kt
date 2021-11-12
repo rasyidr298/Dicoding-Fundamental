@@ -3,16 +3,24 @@ package id.rrdevfundamental.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import id.rrdevfundamental.data.network.ApiService
-import id.rrdevfundamental.data.response.DetailResponse
-import id.rrdevfundamental.data.response.SearchResponse
-import id.rrdevfundamental.data.response.Status
-import id.rrdevfundamental.data.response.User
+import id.rrdevfundamental.data.db.dao.UserDao
+import id.rrdevfundamental.data.db.entitiy.UserEntity
+import id.rrdevfundamental.data.network.response.DetailResponse
+import id.rrdevfundamental.data.network.response.SearchResponse
+import id.rrdevfundamental.data.network.response.Status
+import id.rrdevfundamental.data.network.response.User
+import id.rrdevfundamental.utils.toUserDetail
+import id.rrdevfundamental.utils.toUserEntity
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
-class UserRepository(private val api: ApiService) {
+class UserRepository(
+    private val api: ApiService,
+    private val dao: UserDao
+    ) {
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -114,6 +122,62 @@ class UserRepository(private val api: ApiService) {
         )
 
         return liveData
+    }
+
+    fun insertUserDb(detailUser: DetailResponse) {
+        compositeDisposable.add(Observable.fromCallable{
+            dao.insertUser(detailUser.toUserEntity())
+        }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe())
+    }
+
+    fun getUserAllDb(): LiveData<List<UserEntity>> {
+        val liveData = MutableLiveData<List<UserEntity>>()
+
+        compositeDisposable.add(Observable.fromCallable{
+            dao.getUsers()
+        }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe{
+                liveData.postValue(it)
+            })
+
+        return liveData
+    }
+
+    fun checkUserDb(login: String): LiveData<Boolean> {
+        val liveData = MutableLiveData<Boolean>()
+
+        compositeDisposable.add(Observable.fromCallable {
+            dao.getUserById(login)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = {
+                    liveData.postValue(true)
+                },
+                onError = {
+                    liveData.postValue(false)
+                }
+            )
+        )
+        return liveData
+    }
+
+    fun deleteUserDb(user: UserEntity)  {
+
+        compositeDisposable.add(Observable.fromCallable {
+            dao.deleteUser(user.id)
+        }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe())
+
+        getUserAllDb()
     }
 
     fun disposeComposite() {
