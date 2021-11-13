@@ -1,27 +1,23 @@
 package id.rrdevfundamental.ui.home
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import id.rrdevfundamental.R
-import id.rrdevfundamental.ui.adapter.UserAdapter
 import id.rrdevfundamental.data.network.response.Status
 import id.rrdevfundamental.data.network.response.User
 import id.rrdevfundamental.databinding.ActivityHomeBinding
+import id.rrdevfundamental.ui.adapter.UserAdapter
 import id.rrdevfundamental.ui.detail.DetailActivity
 import id.rrdevfundamental.ui.favorite.FavoriteActivity
-import id.rrdevfundamental.utils.OnItemClicked
-import id.rrdevfundamental.utils.hide
-import id.rrdevfundamental.utils.show
-import id.rrdevfundamental.utils.toast
+import id.rrdevfundamental.ui.setting.SettingActivity
+import id.rrdevfundamental.utils.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity(), OnItemClicked {
@@ -37,9 +33,9 @@ class HomeActivity : AppCompatActivity(), OnItemClicked {
         val view = binding.root
         setContentView(view)
 
+        checkTheme()
         setupToolbar()
         initView()
-        setupView()
         observeSearchQuery()
     }
 
@@ -49,16 +45,6 @@ class HomeActivity : AppCompatActivity(), OnItemClicked {
         with(binding.rvMain){
             layoutManager = GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.VERTICAL, false)
             adapter = this@HomeActivity.adapter
-        }
-    }
-
-    private fun setupView() {
-
-        with(binding) {
-            progress.hide()
-            lootie.setAnimation("search.json")
-            lootie.playAnimation()
-            lootie.loop(true)
         }
     }
 
@@ -139,14 +125,40 @@ class HomeActivity : AppCompatActivity(), OnItemClicked {
         }
 
         itemSetting.setOnMenuItemClickListener {
-            val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            try {
-                startActivity(intent)
-            }catch (e: ActivityNotFoundException) {
-                Log.e("activity", e.message.toString())
-            }
+            startActivity(Intent(this, SettingActivity::class.java))
             true
         }
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun checkTheme() {
+        when (MyPreferences(this).darkMode) {
+            0 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                delegate.applyDayNight()
+
+                with(binding) {
+                    progress.hide()
+                    lootie.setAnimation("search.json")
+                    lootie.playAnimation()
+                    lootie.loop(true)
+                }
+            }
+            1 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                delegate.applyDayNight()
+
+                with(binding) {
+                    progress.hide()
+                    lootie.setAnimation("search_dark.json")
+                    lootie.playAnimation()
+                    lootie.loop(true)
+                }
+            }
+            2 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                delegate.applyDayNight()
+            }
+        }
     }
 }

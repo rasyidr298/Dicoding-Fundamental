@@ -8,8 +8,6 @@ import id.rrdevfundamental.data.repository.UserRepository
 import id.rrdevfundamental.ui.detail.DetailViewModel
 import id.rrdevfundamental.ui.favorite.FavoritelViewModel
 import id.rrdevfundamental.ui.home.HomeViewModel
-import id.rrdevfundamental.utils.ACCESS_TOKEN
-import id.rrdevfundamental.utils.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -25,7 +23,7 @@ val networkModule = module {
 
     single {
         val okHttp = OkHttpClient.Builder()
-            .addInterceptor(BasicInterceptor(ACCESS_TOKEN))
+            .addInterceptor(BasicInterceptor(BuildConfig.API_KEY))
             .addInterceptor(logger)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .connectTimeout(120, TimeUnit.SECONDS)
@@ -33,7 +31,7 @@ val networkModule = module {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttp)
